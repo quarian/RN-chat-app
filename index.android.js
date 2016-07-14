@@ -14,6 +14,7 @@ import {
   TouchableHighlight,
   Navigator,
   BackAndroid,
+  TextInput,
 } from 'react-native';
 
 var _navigator;
@@ -39,8 +40,8 @@ class ChatApp extends Component {
           return React.createElement(route.component, { navigator });
         }}
         />
-    );
-  }
+    )
+  };
 }
 
 class ChatListView extends Component {
@@ -49,8 +50,8 @@ class ChatListView extends Component {
       <ScrollView>
         <Thumb name='YAY' navigator={this.props.navigator}/>
       </ScrollView>
-    );
-  }
+    )
+  };
 }
 
 class Thumb extends Component {
@@ -58,8 +59,9 @@ class Thumb extends Component {
     props.navigator.push({
       name: 'Chat View',
       component: ChatView
-    });
-  }
+    })
+  };
+
   render() {
     return (
       <View>
@@ -69,18 +71,57 @@ class Thumb extends Component {
           </Text>
         </TouchableHighlight>
       </View>
-    );
-  }
+    )
+  };
 }
 
 class ChatView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { chatRows: [] };
+  }
+
+  _addRow(message) {
+    this.state.chatRows.push(<Text key={this.state.chatRows.length}>{message}</Text>);
+    console.log('CALLING FUNCTION');
+    this.setState({chatRows: this.state.chatRows});
+  }
+
   render() {
     return (
       <View>
-        <Text>ahjkhlkjahflkj</Text>
+        <Text style={styles.welcome}>ahjkhlkjahflkj</Text>
+        {this.state.chatRows}
+        <ChatInput parent={this}/>
       </View>
     )
+  };
+}
+
+class ChatInput extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: 'Useless Placeholder' };
   }
+
+  postChatMessage(text, parent) {
+    console.log(this.state.text);
+    parent._addRow(this.state.text);
+    this.setState({text: ''});
+  }
+
+  render() {
+    return(
+      <TextInput
+        style={styles.chatinput}
+        returnKeyType='done'
+        onChangeText={(text) => this.setState({text})}
+        onSubmitEditing={(text) =>
+          this.postChatMessage(text, this.props.parent)}
+        value={this.state.text}
+      />
+    )
+  };
 }
 
 const styles = StyleSheet.create({
@@ -99,6 +140,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  chatinput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1
   },
 });
 
