@@ -84,6 +84,7 @@ class ChatView extends Component {
   _addRow(message) {
     this.state.chatRows.push(<Text key={this.state.chatRows.length}>{message}</Text>);
     this.setState({chatRows: this.state.chatRows});
+    return message
   }
 
   render() {
@@ -106,11 +107,9 @@ class ChatInput extends Component {
   postChatMessage(text, parent) {
     console.log(this.state.text);
     parent._addRow(this.state.text);
-    var response = fetch('https://elegant-saucisson-63110.herokuapp.com/quote')
+    fetch('https://elegant-saucisson-63110.herokuapp.com/quote')
       .then((response) => response.text())
-      .then((responseText) => {
-        parent._addRow(responseText)
-      })
+      .then((responseText) => parent._addRow(responseText))
       .catch((error) => console.warn(error))
     this.setState({text: ''});
   }
