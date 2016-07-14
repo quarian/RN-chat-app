@@ -36,10 +36,7 @@ class ChatApp extends Component {
         }}
         renderScene={(route, navigator) => {
           _navigator = navigator;
-          console.log(route);
-          if (route.component) {
-            return React.createElement(route.component, { navigator })
-          }
+          return React.createElement(route.component, { navigator });
         }}
         />
     );
@@ -50,31 +47,26 @@ class ChatListView extends Component {
   render() {
     return (
       <ScrollView>
-        <Thumb/>
-        <Thumb/>
-        <Thumb/>
-        <Thumb/>
-        <Thumb/>
-        <Thumb/>
-        <Thumb/>
+        <Thumb name='YAY' navigator={this.props.navigator}/>
       </ScrollView>
     );
   }
 }
 
 class Thumb extends Component {
-  _onPressButton() {
-    _navigator.push({
+  _onPressButton(props) {
+    props.navigator.push({
       name: 'Chat View',
       component: ChatView
     });
   }
-
   render() {
     return (
       <View>
-        <TouchableHighlight onPress={this._onPressButton}>
-          <Text style={styles.welcome}>TAHJKHSDKHK</Text>
+        <TouchableHighlight onPress={() => this._onPressButton(this.props)}>
+          <Text style={styles.welcome}>
+            TAHJKHSDKHK {this.props.name}
+          </Text>
         </TouchableHighlight>
       </View>
     );
