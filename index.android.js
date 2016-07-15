@@ -144,7 +144,15 @@ class ChatInput extends Component {
   postChatMessage(text, parent) {
     console.log(this.state.text);
     parent._addRow(this.state.text);
-    fetch('https://elegant-saucisson-63110.herokuapp.com/quote')
+    fetch('https://elegant-saucisson-63110.herokuapp.com/quote', {
+      method: 'POST',
+      headers: {},
+      body: JSON.stringify({
+              name1: 'Champ',
+              name2: parent.props.title,
+              message: this.state.text
+        })
+      })
       .then((response) => response.text())
       .then((responseText) => parent._addRow(responseText))
       .catch((error) => console.warn(error))
