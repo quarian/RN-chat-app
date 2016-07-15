@@ -28,6 +28,20 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return true;
 });
 
+
+function makeAlert(message) {
+  Alert.alert(
+      'ALERT!',
+      message,
+    [
+      {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]
+  )
+};
+
+
 class ChatApp extends Component {
   render() {
     return (
@@ -38,7 +52,7 @@ class ChatApp extends Component {
         }}
         renderScene={(route, navigator) => {
           _navigator = navigator;
-          return React.createElement(route.component, { navigator });
+          return React.createElement(route.component, { navigator , ...route.passProps});
         }}
         />
     )
@@ -51,19 +65,8 @@ class ChatListView extends Component {
     this.state = {
       userJson: ""
     }
+    this.getChats()
   }
-
-  makeAlert(message) {
-    Alert.alert(
-      'ALERT!',
-      message,
-    [
-      {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
-    ]
-  )
-}
 
   getChats() {
     console.log("Getting chats");
@@ -74,7 +77,6 @@ class ChatListView extends Component {
   }
 
   render() {
-    this.getChats()
     return (
       <ScrollView>
         <Thumb name={this.state.userJson[0]} navigator={this.props.navigator}/>
@@ -92,7 +94,8 @@ class Thumb extends Component {
   _onPressButton(props) {
     props.navigator.push({
       name: 'Chat View',
-      component: ChatView
+      component: ChatView,
+      passProps: {title: props.name}
     })
   };
 
@@ -101,7 +104,7 @@ class Thumb extends Component {
       <View>
         <TouchableHighlight onPress={() => this._onPressButton(this.props)}>
           <Text style={styles.welcome}>
-            TAHJKHSDKHK {this.props.name}
+            {this.props.name}
           </Text>
         </TouchableHighlight>
       </View>
@@ -124,7 +127,7 @@ class ChatView extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.welcome}>ahjkhlkjahflkj</Text>
+        <Text style={styles.welcome}>{this.props.title}</Text>
         {this.state.chatRows}
         <ChatInput parent={this}/>
       </View>
