@@ -149,10 +149,15 @@ class ChatView extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.chatContainer}>
         <Text style={styles.welcome}>{this.props.title}</Text>
-        {this.state.chatRows}
-        <ChatInput parent={this}/>
+        <ScrollView ref="_chatScrollView" style={styles.chatMessages}
+          onContentSizeChange={(width, height)=>{
+              this.refs._chatScrollView.scrollTo({x:0, y:height, animated:true})
+          }}>
+          {this.state.chatRows}
+        </ScrollView>
+        <ChatInput style={styles.chatInput} parent={this}/>
       </View>
     )
   };
@@ -217,6 +222,21 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1
+  },
+  chatContainer: {
+    flex: 1
+  },
+  chatMessages: {
+    flex: 1
+  },
+  chatInput: {
+    flex: 1
+  },
+  myMessage: {
+    textAlign: 'right'
+  },
+  friendMessage: {
+    textAlign: 'left'
   },
 });
 
