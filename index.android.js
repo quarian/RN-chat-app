@@ -16,6 +16,7 @@ import {
   BackAndroid,
   TextInput,
   Alert,
+  InteractionManager,
 } from 'react-native';
 
 var _navigator;
@@ -124,8 +125,16 @@ class Thumb extends Component {
 class ChatView extends Component {
   constructor(props) {
     super(props);
-    this.state = { chatRows: [] };
-    this.getChatHistory()
+    this.state = {
+      chatRows: [],
+      showLoading: true
+    };
+  }
+
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.getChatHistory();
+    });
   }
 
   getChatHistory() {
@@ -144,6 +153,7 @@ class ChatView extends Component {
 
   populateChatHistory(response) {
     historyJson = JSON.parse(response);
+    this.setState({showLoading: false});
     for (var i = 0; i < historyJson.length; i++) {
       this._addRow(historyJson[i][1],
         historyJson[i][0] == 'Champ');
@@ -161,6 +171,7 @@ class ChatView extends Component {
   }
 
   render() {
+    var loading = this.state.showLoading ? <Text ref="loading" style={styles.welcome}>Loading chat history...</Text> : null;
     return (
       <View style={styles.chatContainer}>
         <Text style={styles.welcome}>{this.props.title}</Text>
@@ -168,6 +179,7 @@ class ChatView extends Component {
           onContentSizeChange={(width, height)=>{
               this.refs._chatScrollView.scrollTo({x:0, y:height, animated:true})
           }}>
+          {loading}
           {this.state.chatRows}
         </ScrollView>
         <ChatInput style={styles.chatInput} parent={this}/>
