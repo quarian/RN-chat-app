@@ -15,6 +15,7 @@ import {
   Navigator,
   BackAndroid,
   TextInput,
+  Alert,
 } from 'react-native';
 
 var _navigator;
@@ -45,10 +46,43 @@ class ChatApp extends Component {
 }
 
 class ChatListView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userJson: ""
+    }
+  }
+
+  makeAlert(message) {
+    Alert.alert(
+      'ALERT!',
+      message,
+    [
+      {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]
+  )
+}
+
+  getChats() {
+    console.log("Getting chats");
+    fetch('https://elegant-saucisson-63110.herokuapp.com/db')
+      .then((response) => response.text())
+      .then((responseText) => this.setState({userJson: JSON.parse(responseText)}))
+      .catch((error) => console.warn(error))
+  }
+
   render() {
+    this.getChats()
     return (
       <ScrollView>
-        <Thumb name='YAY' navigator={this.props.navigator}/>
+        <Thumb name={this.state.userJson[0]} navigator={this.props.navigator}/>
+        <Thumb name={this.state.userJson[1]} navigator={this.props.navigator}/>
+        <Thumb name={this.state.userJson[2]} navigator={this.props.navigator}/>
+        <Thumb name={this.state.userJson[3]} navigator={this.props.navigator}/>
+        <Thumb name={this.state.userJson[4]} navigator={this.props.navigator}/>
+        <Thumb name={this.state.userJson[5]} navigator={this.props.navigator}/>
       </ScrollView>
     )
   };
