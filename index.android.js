@@ -116,6 +116,29 @@ class ChatView extends Component {
   constructor(props) {
     super(props);
     this.state = { chatRows: [] };
+    this.getChatHistory()
+  }
+
+  getChatHistory() {
+    console.log(this.props.title)
+    fetch('https://elegant-saucisson-63110.herokuapp.com/chat', {
+      method: 'POST',
+      headers: {},
+      body: JSON.stringify({
+              name1: 'Champ',
+              name2: this.props.title
+        })
+      })
+      .then((response) => response.text())
+      .then((responseText) => this.populateChatHistory(responseText))
+      .catch((error) => console.warn(error))
+  }
+
+  populateChatHistory(response) {
+    historyJson = JSON.parse(response);
+    for (var i = 0; i < historyJson.length; i++) {
+      this._addRow(historyJson[i][1])
+    }
   }
 
   _addRow(message) {
