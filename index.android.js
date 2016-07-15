@@ -70,7 +70,6 @@ class ChatListView extends Component {
   }
 
   getChats() {
-    console.log("Getting chats");
     fetch('https://elegant-saucisson-63110.herokuapp.com/db')
       .then((response) => response.text())
       .then((responseText) => {
@@ -82,7 +81,6 @@ class ChatListView extends Component {
 
   populateFriends() {
     for (var i = 1; i < this.state.userJson.length; i++) {
-      console.log(this.state.userJson[i]);
       this.state.friends.push(
         <Thumb name={this.state.userJson[i]} key={this.state.friends.length} navigator={this.props.navigator}/>)
     }
@@ -131,7 +129,6 @@ class ChatView extends Component {
   }
 
   getChatHistory() {
-    console.log(this.props.title)
     fetch('https://elegant-saucisson-63110.herokuapp.com/chat', {
       method: 'POST',
       headers: {},
@@ -186,7 +183,6 @@ class ChatInput extends Component {
   }
 
   postChatMessage(text, parent) {
-    console.log(this.state.text);
     parent._addRow(this.state.text, true);
     fetch('https://elegant-saucisson-63110.herokuapp.com/quote', {
       method: 'POST',
