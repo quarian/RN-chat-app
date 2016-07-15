@@ -63,7 +63,8 @@ class ChatListView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userJson: ""
+      userJson: [],
+      friends: []
     }
     this.getChats()
   }
@@ -72,20 +73,30 @@ class ChatListView extends Component {
     console.log("Getting chats");
     fetch('https://elegant-saucisson-63110.herokuapp.com/db')
       .then((response) => response.text())
-      .then((responseText) => this.setState({userJson: JSON.parse(responseText)}))
+      .then((responseText) => {
+        this.setState({userJson: JSON.parse(responseText)})
+        this.populateFriends()
+      })
       .catch((error) => console.warn(error))
+  }
+
+  populateFriends() {
+    for (var i = 1; i < this.state.userJson.length; i++) {
+      console.log(this.state.userJson[i]);
+      this.state.friends.push(
+        <Thumb name={this.state.userJson[i]} key={this.state.friends.length} navigator={this.props.navigator}/>)
+    }
+    this.setState({friends: this.state.friends})
   }
 
   render() {
     return (
-      <ScrollView>
-        <Thumb name={this.state.userJson[0]} navigator={this.props.navigator}/>
-        <Thumb name={this.state.userJson[1]} navigator={this.props.navigator}/>
-        <Thumb name={this.state.userJson[2]} navigator={this.props.navigator}/>
-        <Thumb name={this.state.userJson[3]} navigator={this.props.navigator}/>
-        <Thumb name={this.state.userJson[4]} navigator={this.props.navigator}/>
-        <Thumb name={this.state.userJson[5]} navigator={this.props.navigator}/>
-      </ScrollView>
+      <View>
+        <Text style={styles.welcome}>CleanChat</Text>
+        <ScrollView>
+          {this.state.friends}
+        </ScrollView>
+      </View>
     )
   };
 }
