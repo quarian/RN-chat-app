@@ -137,12 +137,17 @@ class ChatView extends Component {
   populateChatHistory(response) {
     historyJson = JSON.parse(response);
     for (var i = 0; i < historyJson.length; i++) {
-      this._addRow(historyJson[i][1])
+      this._addRow(historyJson[i][1],
+        historyJson[i][0] == 'Champ');
     }
   }
 
-  _addRow(message) {
-    this.state.chatRows.push(<Text key={this.state.chatRows.length}>{message}</Text>);
+  _addRow(message, me) {
+    if (me) {
+      this.state.chatRows.push(<Text style={styles.myMessage} key={this.state.chatRows.length}>{message}</Text>);
+    } else {
+      this.state.chatRows.push(<Text style={styles.friendMessage} key={this.state.chatRows.length}>{message}</Text>);
+    }
     this.setState({chatRows: this.state.chatRows});
     return message
   }
@@ -171,7 +176,7 @@ class ChatInput extends Component {
 
   postChatMessage(text, parent) {
     console.log(this.state.text);
-    parent._addRow(this.state.text);
+    parent._addRow(this.state.text, true);
     fetch('https://elegant-saucisson-63110.herokuapp.com/quote', {
       method: 'POST',
       headers: {},
@@ -182,7 +187,7 @@ class ChatInput extends Component {
         })
       })
       .then((response) => response.text())
-      .then((responseText) => parent._addRow(responseText))
+      .then((responseText) => parent._addRow(responseText, false))
       .catch((error) => console.warn(error))
     this.setState({text: ''});
   }
