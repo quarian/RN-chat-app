@@ -127,14 +127,43 @@ class ChatView extends Component {
     super(props);
     this.state = {
       chatRows: [],
-      showLoading: true
+      showLoading: true,
+      ws: null
     };
   }
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this.getChatHistory();
+      this.setState({ws: new WebSocket('ws://polar-dusk-14031.herokuapp.com/ws')});
+      var ws = this.state.ws;
+      ws.onopen = () => {
+        // connection opened
+        console.log("Whee")
+        ws.send('something');
+      };
+
+      ws.onmessage = (e) => {
+        // a message was received
+        var message = JSON.parse(e.data).text;
+        this._addRow(message, false);
+        console.log(message);
+      };
+
+      ws.onerror = (e) => {
+        // an error occurred
+        console.log(e.message);
+      };
+
+      ws.onclose = (e) => {
+        // connection closed
+        console.log(e.code, e.reason);
+      };
     });
+  }
+
+  componentWillUnmount() {
+    this.state.ws.close()
   }
 
   getChatHistory() {
