@@ -90,8 +90,8 @@ class ChatListView extends Component {
 
   render() {
     return (
-      <View>
-        <Text style={styles.welcome}>CleanChat</Text>
+      <View style={styles.mainContainer}>
+        <Text style={styles.mainTitle}>CleanChat</Text>
         <ScrollView>
           {this.state.friends}
         </ScrollView>
@@ -113,7 +113,7 @@ class Thumb extends Component {
     return (
       <View>
         <TouchableHighlight onPress={() => this._onPressButton(this.props)}>
-          <Text style={styles.welcome}>
+          <Text style={styles.friendContainer}>
             {this.props.name}
           </Text>
         </TouchableHighlight>
@@ -199,10 +199,10 @@ class ChatView extends Component {
   }
 
   render() {
-    var loading = this.state.showLoading ? <Text ref="loading" style={styles.welcome}>Loading chat history...</Text> : null;
+    var loading = this.state.showLoading ? <Text ref="loading" style={styles.mainTitle}>Loading chat history...</Text> : null;
     return (
       <View style={styles.chatContainer}>
-        <Text style={styles.welcome}>{this.props.title}</Text>
+        <Text style={styles.chatTitle}>{this.props.title}</Text>
         <ScrollView ref="_chatScrollView" style={styles.chatMessages}
           onContentSizeChange={(width, height)=>{
               this.refs._chatScrollView.scrollTo({x:0, y:height, animated:true})
@@ -261,10 +261,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
+  mainTitle: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#035405'
+  },
+  chatTitle: {
+    fontSize: 20,
+    textAlign: 'center',
+    padding: 10,
+    backgroundColor: '#035405'
+  },
+  friendContainer: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#fef508'
+  },
+  mainContainer: {
+    backgroundColor: '#e3e2e3',
+    flex: 1
   },
   instructions: {
     textAlign: 'center',
@@ -280,16 +299,19 @@ const styles = StyleSheet.create({
     flex: 1
   },
   chatMessages: {
+    backgroundColor: '#e3e2e3',
     flex: 1
   },
   chatInput: {
     flex: 1
   },
   myMessage: {
-    textAlign: 'right'
+    textAlign: 'right',
+    padding: 5
   },
   friendMessage: {
-    textAlign: 'left'
+    textAlign: 'left',
+    padding: 5
   },
 });
 
