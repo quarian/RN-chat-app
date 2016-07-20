@@ -225,6 +225,7 @@ class ChatView extends Component {
           }}>
           {this.state.chatRows}
         </ScrollView>
+        <View style={styles.separator}/>
         <ChatInput style={styles.chatInput} parent={this}/>
       </View>
     )
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   chatinput: {
-    height: 40,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1
   },
@@ -335,27 +336,33 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   },
   myMessageBox: {
-    //backgroundColor:'#ef553a',
-    //borderRadius:5
+    backgroundColor:'#ef003a',
+    padding: 5,
+    borderRadius:5
   },
   myMessageRow: {
-    flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-end',
-    margin: 1
+    margin: 2,
+    marginLeft: 30
   },
   friendMessage: {
     textAlign: 'left'
   },
   friendMessageBox: {
-  //  backgroundColor:'#ef553a',
-  //  borderRadius: 5
+    backgroundColor:'#ef553a',
+    padding: 5,
+    borderRadius: 5
   },
   friendMessageRow: {
-    flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-start',
-    margin: 1
+    margin: 2,
+    marginRight: 30,
+  },
+  separator: {
+    backgroundColor: '#e3e2e3',
+    height: 10
   }
 });
 
