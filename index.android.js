@@ -190,24 +190,39 @@ class ChatView extends Component {
 
   _addRow(message, me) {
     if (me) {
-      this.state.chatRows.push(<Text style={styles.myMessage} key={this.state.chatRows.length}>{message}</Text>);
+      this.state.chatRows.push(
+        <View key={this.state.chatRows.length} style={styles.myMessageRow}>
+          <View style={styles.myMessageBox}>
+            <Text style={styles.myMessage}>{message}</Text>
+          </View>
+        </View>
+      );
     } else {
-      this.state.chatRows.push(<Text style={styles.friendMessage} key={this.state.chatRows.length}>{message}</Text>);
+      this.state.chatRows.push(
+        <View key={this.state.chatRows.length} style={styles.friendMessageRow}>
+          <View style={styles.friendMessageBox}>
+            <Text style={styles.friendMessage}>{message}</Text>
+          </View>
+        </View>
+      );
     }
     this.setState({chatRows: this.state.chatRows});
     return message
   }
 
   render() {
-    var loading = this.state.showLoading ? <Text ref="loading" style={styles.mainTitle}>Loading chat history...</Text> : null;
+    var loading = !this.state.showLoading ? null :
+      <View ref="loading" style={styles.loadingContainer}>
+        <Text style={styles.loading}>Loading chat history...</Text>
+      </View>;
     return (
       <View style={styles.chatContainer}>
         <Text style={styles.chatTitle}>{this.props.title}</Text>
+        {loading}
         <ScrollView ref="_chatScrollView" style={styles.chatMessages}
           onContentSizeChange={(width, height)=>{
               this.refs._chatScrollView.scrollTo({x:0, y:height, animated:true})
           }}>
-          {loading}
           {this.state.chatRows}
         </ScrollView>
         <ChatInput style={styles.chatInput} parent={this}/>
@@ -285,10 +300,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#e3e2e3',
     flex: 1
   },
-  instructions: {
+  loading: {
+    fontSize: 20,
     textAlign: 'center',
+    backgroundColor: '#e3e2e3',
     color: '#333333',
-    marginBottom: 5,
+  },
+  loadingContainer: {
+    flex: 3,
+    backgroundColor: '#e3e2e3',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   chatinput: {
     height: 40,
@@ -296,23 +319,44 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   chatContainer: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'column'
   },
   chatMessages: {
     backgroundColor: '#e3e2e3',
-    flex: 1
+    flex: 1,
+    flexDirection: 'column',
+    padding: 5
   },
   chatInput: {
-    flex: 1
+  //  flex: 1
   },
   myMessage: {
-    textAlign: 'right',
-    padding: 5
+    textAlign: 'right'
+  },
+  myMessageBox: {
+    //backgroundColor:'#ef553a',
+    //borderRadius:5
+  },
+  myMessageRow: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    margin: 1
   },
   friendMessage: {
-    textAlign: 'left',
-    padding: 5
+    textAlign: 'left'
   },
+  friendMessageBox: {
+  //  backgroundColor:'#ef553a',
+  //  borderRadius: 5
+  },
+  friendMessageRow: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    margin: 1
+  }
 });
 
 AppRegistry.registerComponent('ChatApp', () => ChatApp);
