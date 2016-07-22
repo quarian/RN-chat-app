@@ -92,6 +92,7 @@ class ChatListView extends Component {
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.mainTitle}>CleanChat</Text>
+        <View style={styles.chatListSeparator}/>
         <ScrollView>
           {this.state.friends}
         </ScrollView>
@@ -117,6 +118,7 @@ class Thumb extends Component {
             {this.props.name}
           </Text>
         </TouchableHighlight>
+        <View style={styles.chatListSeparator}/>
       </View>
     )
   };
@@ -218,6 +220,7 @@ class ChatView extends Component {
     return (
       <View style={styles.chatContainer}>
         <Text style={styles.chatTitle}>{this.props.title}</Text>
+        <View style={styles.chatListSeparator}/>
         {loading}
         <ScrollView ref="_chatScrollView" style={styles.chatMessages}
           onContentSizeChange={(width, height)=>{
@@ -235,7 +238,7 @@ class ChatView extends Component {
 class ChatInput extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: 'Useless Placeholder' };
+    this.state = { text: '' };
   }
 
   postChatMessage(text, parent) {
@@ -261,6 +264,7 @@ class ChatInput extends Component {
       <TextInput
         style={styles.chatinput}
         returnKeyType='done'
+        placeholder="Write your messages here"
         onChangeText={(text) => this.setState({text})}
         onSubmitEditing={(text) =>
           this.postChatMessage(text, this.props.parent)}
@@ -280,20 +284,21 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontSize: 20,
     textAlign: 'center',
-    marginBottom: 10,
+    textAlignVertical: 'center',
     padding: 10,
     backgroundColor: '#035405'
   },
   chatTitle: {
     fontSize: 20,
     textAlign: 'center',
+    textAlignVertical: 'center',
     padding: 10,
     backgroundColor: '#035405'
   },
   friendContainer: {
     fontSize: 20,
     textAlign: 'center',
-    marginBottom: 10,
+    textAlignVertical: 'center',
     padding: 10,
     backgroundColor: '#fef508'
   },
@@ -363,7 +368,11 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: '#e3e2e3',
     height: 10
-  }
+  },
+  chatListSeparator: {
+      backgroundColor: '#e3e2e3',
+      height: 2
+  },
 });
 
 AppRegistry.registerComponent('ChatApp', () => ChatApp);
