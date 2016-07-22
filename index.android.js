@@ -212,6 +212,10 @@ class ChatView extends Component {
     return message
   }
 
+  goBack(props) {
+    props.navigator.pop();
+  }
+
   render() {
     var loading = !this.state.showLoading ? null :
       <View ref="loading" style={styles.loadingContainer}>
@@ -219,7 +223,10 @@ class ChatView extends Component {
       </View>;
     return (
       <View style={styles.chatContainer}>
-        <Text style={styles.chatTitle}>{this.props.title}</Text>
+        <View style={styles.chatTitleContainer}>
+          <Text style={styles.chatBackButton} onPress={() => this.goBack(this.props)}>Back</Text>
+          <Text style={styles.chatTitle}>{this.props.title}</Text>
+        </View>
         <View style={styles.chatListSeparator}/>
         {loading}
         <ScrollView ref="_chatScrollView" style={styles.chatMessages}
@@ -288,13 +295,26 @@ const styles = StyleSheet.create({
     color:  backgroundColor,
     backgroundColor: titleBackgroundColor
   },
+  chatTitleContainer: {
+    flexDirection: 'row'
+  },
+  chatBackButton: {
+      fontSize: 15,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      color:  backgroundColor,
+      padding: 12.5,
+      backgroundColor: titleBackgroundColor,
+      flex: 1
+  },
   chatTitle: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: 'left',
     textAlignVertical: 'center',
     color:  backgroundColor,
     padding: 10,
-    backgroundColor: titleBackgroundColor
+    backgroundColor: titleBackgroundColor,
+    flex: 7
   },
   chatListElement: {
   },
