@@ -91,7 +91,7 @@ class ChatListView extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <Text style={styles.mainTitle}>CleanChat</Text>
+        <Text style={styles.mainTitle}>Elegant Chat</Text>
         <View style={styles.chatListSeparator}/>
         <ScrollView>
           {this.state.friends}
@@ -112,7 +112,7 @@ class Thumb extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.chatListElement}>
         <TouchableHighlight onPress={() => this._onPressButton(this.props)}>
           <Text style={styles.friendContainer}>
             {this.props.name}
@@ -262,7 +262,7 @@ class ChatInput extends Component {
   render() {
     return(
       <TextInput
-        style={styles.chatinput}
+        style={styles.chatInput}
         returnKeyType='done'
         placeholder="Write your messages here"
         onChangeText={(text) => this.setState({text})}
@@ -274,74 +274,78 @@ class ChatInput extends Component {
   };
 }
 
+var backgroundColor = '#DCD0C0';
+var titleBackgroundColor = '#373737';
+var chatItemBackgroundColor = '#f4f4f4';
+var fontColor = '#c0b283';
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
   mainTitle: {
     fontSize: 20,
     textAlign: 'center',
     textAlignVertical: 'center',
     padding: 10,
-    backgroundColor: '#035405'
+    color:  backgroundColor,
+    backgroundColor: titleBackgroundColor
   },
   chatTitle: {
     fontSize: 20,
     textAlign: 'center',
     textAlignVertical: 'center',
+    color:  backgroundColor,
     padding: 10,
-    backgroundColor: '#035405'
+    backgroundColor: titleBackgroundColor
+  },
+  chatListElement: {
   },
   friendContainer: {
     fontSize: 20,
     textAlign: 'center',
     textAlignVertical: 'center',
     padding: 10,
-    backgroundColor: '#fef508'
+    backgroundColor: chatItemBackgroundColor,
+    color: fontColor
   },
   mainContainer: {
-    backgroundColor: '#e3e2e3',
+    backgroundColor: backgroundColor,
     flex: 1
   },
   loading: {
     fontSize: 20,
     textAlign: 'center',
-    backgroundColor: '#e3e2e3',
-    color: '#333333',
+    backgroundColor: backgroundColor,
+    color: fontColor,
   },
   loadingContainer: {
     flex: 3,
-    backgroundColor: '#e3e2e3',
+    backgroundColor: backgroundColor,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  chatinput: {
+  chatInput: {
     height: 50,
-    borderColor: 'gray',
-    borderWidth: 1
+    borderColor: titleBackgroundColor,
+    borderWidth: 1,
+    backgroundColor: chatItemBackgroundColor,
+    color: titleBackgroundColor
   },
   chatContainer: {
     flex: 1,
     flexDirection: 'column'
   },
   chatMessages: {
-    backgroundColor: '#e3e2e3',
+    backgroundColor: backgroundColor,
     flex: 1,
     flexDirection: 'column',
     padding: 5
   },
-  chatInput: {
-  //  flex: 1
-  },
   myMessage: {
-    textAlign: 'right'
+    textAlign: 'right',
+    color: titleBackgroundColor
   },
   myMessageBox: {
-    backgroundColor:'#ef003a',
+    backgroundColor: chatItemBackgroundColor,
     padding: 5,
     borderRadius:5
   },
@@ -352,10 +356,11 @@ const styles = StyleSheet.create({
     marginLeft: 30
   },
   friendMessage: {
-    textAlign: 'left'
+    textAlign: 'left',
+    color: titleBackgroundColor
   },
   friendMessageBox: {
-    backgroundColor:'#ef553a',
+    backgroundColor: fontColor,
     padding: 5,
     borderRadius: 5
   },
@@ -366,11 +371,11 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
   separator: {
-    backgroundColor: '#e3e2e3',
+    backgroundColor: backgroundColor,
     height: 10
   },
   chatListSeparator: {
-      backgroundColor: '#e3e2e3',
+      backgroundColor: backgroundColor,
       height: 2
   },
 });
