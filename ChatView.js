@@ -18,7 +18,9 @@ class ChatView extends Component {
     this.state = {
       chatRows: [],
       showLoading: true,
-      ws: null
+      ws: null,
+      scrollViewHeight: 0,
+      scrollContentHeight: 0
     };
   }
 
@@ -67,6 +69,14 @@ class ChatView extends Component {
     props.navigator.pop();
   }
 
+  scrollToBottom() {
+    console.log(this.scrollContentHeight)
+    console.log(this.scrollViewHeight)
+    this.refs.chatScrollView.scrollTo(
+      {y: this.scrollContentHeight - this.scrollViewHeight, animated: true}
+    )
+  }
+
   render() {
     var loading = !this.state.showLoading ? null :
       <View ref="loading" style={styles.loadingContainer}>
@@ -80,10 +90,13 @@ class ChatView extends Component {
         </View>
         <View style={styles.chatListSeparator}/>
         {loading}
-        <ScrollView ref="_chatScrollView" style={styles.chatMessages}
-          onContentSizeChange={(width, height)=>{
-              this.refs._chatScrollView.scrollTo({x:0, y:height, animated:true})
-          }}>
+        <ScrollView ref="chatScrollView" style={styles.chatMessages}
+          onContentSizeChange={(width, height) => {
+              this.scrollContentHeight = height
+              this.scrollToBottom()
+          }}
+          onLayout={event => this.scrollViewHeight = event.nativeEvent.layout.height}
+          >
           {this.state.chatRows}
         </ScrollView>
         <View style={styles.separator}/>
