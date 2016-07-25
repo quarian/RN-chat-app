@@ -33,7 +33,7 @@ class ChatView extends Component {
 
       ws.onmessage = (e) => {
         // a message was received
-        this._addRow(e.data, false);
+        this.addRow(e.data, false);
         console.log(e.data);
       };
 
@@ -71,12 +71,12 @@ class ChatView extends Component {
     historyJson = JSON.parse(response);
     this.setState({showLoading: false});
     for (var i = 0; i < historyJson.length; i++) {
-      this._addRow(historyJson[i][1],
+      this.addRow(historyJson[i][1],
         historyJson[i][0] == 'Champ');
     }
   }
 
-  _addRow(message, me) {
+  addRow(message, me) {
     if (me) {
       this.state.chatRows.push(
         <View key={this.state.chatRows.length} style={styles.myMessageRow}>

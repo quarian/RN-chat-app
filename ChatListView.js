@@ -10,6 +10,7 @@ import {
 
 var Thumb = require('./Thumb');
 var styles = require('./Styles');
+var getChats = require('./getChats')
 
 class ChatListView extends Component {
   constructor(props) {
@@ -18,17 +19,12 @@ class ChatListView extends Component {
       userJson: [],
       friends: []
     }
-    this.getChats()
+    getChats(this.handleChats, this)
   }
 
-  getChats() {
-    fetch('https://elegant-saucisson-63110.herokuapp.com/db')
-      .then((response) => response.text())
-      .then((responseText) => {
-        this.setState({userJson: JSON.parse(responseText)})
-        this.populateFriends()
-      })
-      .catch((error) => console.warn(error))
+  handleChats(context, json) {
+    context.setState({userJson: json})
+    context.populateFriends()
   }
 
   populateFriends() {

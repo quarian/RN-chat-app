@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 var styles = require('./Styles');
+var getQuote = require('./getQuote');
 
 class ChatInput extends Component {
   constructor(props) {
@@ -15,21 +16,14 @@ class ChatInput extends Component {
   }
 
   postChatMessage(text, parent) {
-    parent._addRow(this.state.text, true);
+    parent.addRow(this.state.text, true);
     parent.state.ws.send(this.state.text);
-    fetch('https://elegant-saucisson-63110.herokuapp.com/quote', {
-      method: 'POST',
-      headers: {},
-      body: JSON.stringify({
-              name1: 'Champ',
-              name2: parent.props.title,
-              message: this.state.text
-        })
-      })
-      .then((response) => response.text())
-      .then((responseText) => parent._addRow(responseText, false))
-      .catch((error) => console.warn(error))
+    getQuote(parent.props.title, this.state.text, this.postQuote, parent);
     this.setState({text: ''});
+  }
+
+  postQuote(quote, parent) {
+    parent.addRow(quote);
   }
 
   render() {
