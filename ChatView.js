@@ -9,6 +9,8 @@ import {
 
 var ChatInput = require('./ChatInput');
 var styles = require('./Styles');
+var getChatHistory = require('./getChatHistory');
+var setUpWebsocket = require('./setUpWebsocket');
 
 class ChatView extends Component {
   constructor(props) {
@@ -20,60 +22,23 @@ class ChatView extends Component {
     };
   }
 
+  populateChatHistory(response, context) {
+    context.setState({showLoading: false});
+    for (var i = 0; i < response.length; i++) {
+      context.addRow(response[i][1],
+        response[i][0] == 'Champ');
+    }
+  }
+
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-      this.getChatHistory();
-      this.setState({ws: new WebSocket('ws://elegant-saucisson-63110.herokuapp.com/ws')});
-      var ws = this.state.ws;
-      ws.onopen = () => {
-        // connection opened
-        console.log("Whee")
-        ws.send("Champ " + this.props.title)
-      };
-
-      ws.onmessage = (e) => {
-        // a message was received
-        this.addRow(e.data, false);
-        console.log(e.data);
-      };
-
-      ws.onerror = (e) => {
-        // an error occurred
-        console.log(e.message);
-      };
-
-      ws.onclose = (e) => {
-        // connection closed
-        console.log(e.code, e.reason);
-      };
+      getChatHistory(this.props.title, this.populateChatHistory, this);
+      setUpWebsocket(this);
     });
   }
 
   componentWillUnmount() {
     this.state.ws.close();
-  }
-
-  getChatHistory() {
-    fetch('https://elegant-saucisson-63110.herokuapp.com/chat', {
-      method: 'POST',
-      headers: {},
-      body: JSON.stringify({
-              name1: 'Champ',
-              name2: this.props.title
-        })
-      })
-      .then((response) => response.text())
-      .then((responseText) => this.populateChatHistory(responseText))
-      .catch((error) => console.warn(error))
-  }
-
-  populateChatHistory(response) {
-    historyJson = JSON.parse(response);
-    this.setState({showLoading: false});
-    for (var i = 0; i < historyJson.length; i++) {
-      this.addRow(historyJson[i][1],
-        historyJson[i][0] == 'Champ');
-    }
   }
 
   addRow(message, me) {
