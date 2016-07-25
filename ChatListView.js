@@ -4,7 +4,6 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableHighlight,
   InteractionManager,
 } from 'react-native';
 
@@ -17,12 +16,19 @@ class ChatListView extends Component {
     super(props);
     this.state = {
       userJson: [],
-      friends: []
+      friends: [],
+      showLoading: true
     }
-    getChats(this.handleChats, this)
+  }
+
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      getChats(this.handleChats, this)
+    });
   }
 
   handleChats(context, json) {
+    context.setState({showLoading: false})
     context.setState({userJson: json})
     context.populateFriends()
   }
@@ -36,10 +42,15 @@ class ChatListView extends Component {
   }
 
   render() {
+    var loading = !this.state.showLoading ? null :
+      <View ref="loading" style={styles.loadingContainer}>
+        <Text style={styles.loading}>Loading friends list...</Text>
+      </View>;
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.mainTitle}>Elegant Chat</Text>
         <View style={styles.chatListSeparator}/>
+        {loading}
         <ScrollView>
           {this.state.friends}
         </ScrollView>
