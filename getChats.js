@@ -1,8 +1,9 @@
-function getChats(callback, context) {
-  fetch('https://elegant-saucisson-63110.herokuapp.com/db')
-    .then((response) => response.text())
-    .then((responseText) => callback(context, JSON.parse(responseText)))
-    .catch((error) => console.warn(error))
+function getChats() {
+  return new Promise((resolve, reject) => {
+    resolve(fetch('https://elegant-saucisson-63110.herokuapp.com/db')
+      .catch((error) => console.warn(error))
+    )
+  })
 }
 
 module.exports = getChats;

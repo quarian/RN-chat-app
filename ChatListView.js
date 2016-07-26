@@ -24,14 +24,17 @@ class ChatListView extends Component {
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-      getChats(this.handleChats, this)
+      getChats()
+        .then((response) => response.text())
+        .then((responseText) => this.handleChats(JSON.parse(responseText)))
+        .catch((error) => console.warn(error))
     });
   }
 
-  handleChats(context, json) {
-    context.setState({showLoading: false})
-    context.setState({userJson: json})
-    context.populateFriends()
+  handleChats(json) {
+    this.setState({showLoading: false})
+    this.setState({userJson: json})
+    this.populateFriends()
   }
 
   populateFriends() {
