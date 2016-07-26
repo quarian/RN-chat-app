@@ -18,12 +18,16 @@ class ChatInput extends Component {
   postChatMessage(text, parent) {
     parent.addRow(this.state.text, true);
     parent.state.ws.send(this.state.text);
-    getQuote(parent.props.title, this.state.text, this.postQuote, parent);
+    getQuote(parent.props.title, this.state.text)
+      .then((response) => response.text())
+      .then((responseText) => this.postQuote(responseText))
+      .catch((error) => console.warn(error))
     this.setState({text: ''});
   }
 
-  postQuote(quote, parent) {
-    parent.addRow(quote);
+  postQuote(quote) {
+    console.log(quote)
+    this.props.parent.addRow(quote);
   }
 
   render() {

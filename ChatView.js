@@ -24,18 +24,20 @@ class ChatView extends Component {
     };
   }
 
-  populateChatHistory(response, context) {
-    context.setState({showLoading: false});
-    response = JSON.parse(response);
+  populateChatHistory(response) {
+    this.setState({showLoading: false});
     for (var i = 0; i < response.length; i++) {
-      context.addRow(response[i][1],
+      this.addRow(response[i][1],
         response[i][0] == 'Champ');
     }
   }
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-      getChatHistory(this.props.title, this.populateChatHistory, this);
+      getChatHistory(this.props.title)
+        .then((response) => response.json())
+        .then((responseJson) => this.populateChatHistory(responseJson))
+        .catch((error) => console.warn(error))
       setUpWebsocket(this);
     });
   }
@@ -71,8 +73,6 @@ class ChatView extends Component {
   }
 
   scrollToBottom() {
-    console.log(this.scrollContentHeight)
-    console.log(this.scrollViewHeight)
     this.refs.chatScrollView.scrollTo(
       {y: this.scrollContentHeight - this.scrollViewHeight, animated: true}
     )

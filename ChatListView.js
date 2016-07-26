@@ -25,8 +25,8 @@ class ChatListView extends Component {
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       getChats()
-        .then((response) => response.text())
-        .then((responseText) => this.handleChats(JSON.parse(responseText)))
+        .then((response) => response.json())
+        .then((responseJson) => this.handleChats(responseJson))
         .catch((error) => console.warn(error))
     });
   }
