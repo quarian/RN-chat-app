@@ -26,6 +26,7 @@ class ChatView extends Component {
 
   populateChatHistory(response, context) {
     context.setState({showLoading: false});
+    response = JSON.parse(response);
     for (var i = 0; i < response.length; i++) {
       context.addRow(response[i][1],
         response[i][0] == 'Champ');
