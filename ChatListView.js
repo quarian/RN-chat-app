@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   InteractionManager,
+  StatusBar
 } from 'react-native';
 
 var Thumb = require('./Thumb');
@@ -48,6 +49,7 @@ class ChatListView extends Component {
       </View>;
     return (
       <View style={styles.mainContainer}>
+        <StatusBar hidden={true} />
         <Text style={styles.mainTitle}>Elegant Chat</Text>
         <View style={styles.chatListSeparator}/>
         {loading}
