@@ -29,6 +29,15 @@ module.exports = StyleSheet.create({
       backgroundColor: titleBackgroundColor,
       flex: 1
   },
+  imageButton: {
+      fontSize: 15,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      color:  backgroundColor,
+      padding: 12.5,
+      backgroundColor: titleBackgroundColor,
+      flex: 1
+  },
   chatTitle: {
     fontSize: 20,
     textAlign: 'left',

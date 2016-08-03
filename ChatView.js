@@ -11,6 +11,7 @@ var ChatInput = require('./ChatInput');
 var styles = require('./Styles');
 var getChatHistory = require('./getChatHistory');
 var setUpWebsocket = require('./setUpWebsocket');
+var ImageSelection = require('./ImageSelection');
 
 class ChatView extends Component {
   constructor(props) {
@@ -72,6 +73,13 @@ class ChatView extends Component {
     props.navigator.pop();
   }
 
+  selectImage(props) {
+    props.navigator.push({
+      name: 'Image Selection',
+      component: ImageSelection
+    })
+  };
+
   scrollToBottom() {
     this.refs.chatScrollView.scrollTo(
       {y: this.scrollContentHeight - this.scrollViewHeight, animated: true}
@@ -88,6 +96,7 @@ class ChatView extends Component {
         <View style={styles.chatTitleContainer}>
           <Text style={styles.chatBackButton} onPress={() => this.goBack(this.props)}>Back</Text>
           <Text style={styles.chatTitle}>{this.props.title}</Text>
+          <Text style={styles.imageButton} onPress={() => this.selectImage(this.props)}>IMAGES</Text>
         </View>
         <View style={styles.chatListSeparator}/>
         {loading}
