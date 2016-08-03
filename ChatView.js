@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   InteractionManager,
+  Image,
 } from 'react-native';
 
 var ChatInput = require('./ChatInput');
@@ -70,7 +71,17 @@ class ChatView extends Component {
   }
 
   postImage(asset) {
-    this.addRow("IMAGE HERE", false);
+    this.state.chatRows.push(
+      <View key={this.state.chatRows.length} style={styles.myMessageRow}>
+        <View style={styles.myMessageBox}>
+          <Image
+            source={asset.node.image}
+            style={styles.imageStyle}
+          />
+        </View>
+      </View>
+    );
+    this.setState({chatRows: this.state.chatRows});
   }
 
   goBack(props) {

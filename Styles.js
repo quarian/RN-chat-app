@@ -121,6 +121,10 @@ module.exports = StyleSheet.create({
     margin: 2,
     marginRight: 30,
   },
+  imageStyle: {
+    width: 200,
+    height: 200
+  },
   separator: {
     backgroundColor: backgroundColor,
     height: 10
