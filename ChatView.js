@@ -6,6 +6,7 @@ import {
   ScrollView,
   InteractionManager,
   Image,
+  Platform
 } from 'react-native';
 
 var ChatInput = require('./ChatInput');
@@ -58,7 +59,7 @@ class ChatView extends Component {
             </View>
           </View>
         );
-      } else {
+      } else if (Platform.OS === 'android'){
         this.postImage(message.slice(message.indexOf("content")));
       }
     } else {
@@ -111,12 +112,14 @@ class ChatView extends Component {
       <View ref="loading" style={styles.loadingContainer}>
         <Text style={styles.loading}>Loading chat history...</Text>
       </View>;
+    var imageButtonPlaceholder = !(Platform.OS === 'android') ? null:
+      <Text style={styles.imageButton} onPress={() => this.selectImage(this.props, this)}>IMAGES</Text>
     return (
       <View style={styles.chatContainer}>
         <View style={styles.chatTitleContainer}>
           <Text style={styles.chatBackButton} onPress={() => this.goBack(this.props)}>Back</Text>
           <Text style={styles.chatTitle}>{this.props.title}</Text>
-          <Text style={styles.imageButton} onPress={() => this.selectImage(this.props, this)}>IMAGES</Text>
+          {imageButtonPlaceholder}
         </View>
         <View style={styles.chatListSeparator}/>
         {loading}
