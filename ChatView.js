@@ -50,13 +50,17 @@ class ChatView extends Component {
 
   addRow(message, me) {
     if (me) {
-      this.state.chatRows.push(
-        <View key={this.state.chatRows.length} style={styles.myMessageRow}>
-          <View style={styles.myMessageBox}>
-            <Text style={styles.myMessage}>{message}</Text>
+        if (message.indexOf("__IMAGE__") < 0) {
+        this.state.chatRows.push(
+          <View key={this.state.chatRows.length} style={styles.myMessageRow}>
+            <View style={styles.myMessageBox}>
+              <Text style={styles.myMessage}>{message}</Text>
+            </View>
           </View>
-        </View>
-      );
+        );
+      } else {
+        this.postImage(message.slice(message.indexOf("content")));
+      }
     } else {
       this.state.chatRows.push(
         <View key={this.state.chatRows.length} style={styles.friendMessageRow}>
@@ -70,12 +74,12 @@ class ChatView extends Component {
     return message
   }
 
-  postImage(asset) {
+  postImage(assetUri) {
     this.state.chatRows.push(
       <View key={this.state.chatRows.length} style={styles.myMessageRow}>
         <View style={styles.myMessageBox}>
           <Image
-            source={asset.node.image}
+            source={{uri: assetUri}}
             style={styles.imageStyle}
           />
         </View>

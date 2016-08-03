@@ -38,7 +38,8 @@ class ImageSelection extends Component {
   }
 
   returnImage(props, asset) {
-    props.parent.postImage(asset);
+    props.parent.postImage(asset.node.image.uri);
+    props.parent.state.ws.send("__IMAGE__" + asset.node.image.uri);
     props.navigator.pop();
   }
 
