@@ -12,8 +12,6 @@ import {
 
 const CameraRollView = require('./CameraRollView');
 
-const AssetScaledImageExampleView = require('./AssetScaledImageExample');
-
 const CAMERA_ROLL_VIEW = 'camera_roll_view';
 
 class ImageSelection extends Component {
@@ -21,42 +19,34 @@ class ImageSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupTypes: 'SavedPhotos',
-      sliderValue: 1,
-      bigImages: true,
     };
   }
 
   render() {
     return (
-      <View>
+      <View style={styles.info}>
         <CameraRollView
           ref={CAMERA_ROLL_VIEW}
           batchSize={20}
-          groupTypes={this.state.groupTypes}
           renderImage={this._renderImage}
+          returnImage={this.returnImage}
+          navigator={this.props.navigator}
+          parent={this.props.context}
         />
       </View>
     );
   }
 
-  loadAsset(asset){
-    if (this.props.navigator) {
-      this.props.navigator.push({
-        title: 'Camera Roll Image',
-        component: AssetScaledImageExampleView,
-        backButtonTitle: 'Back',
-        passProps: { asset: asset },
-      });
-    }
+  returnImage(props, asset) {
+    props.parent.postImage(asset);
+    props.navigator.pop();
   }
 
-  _renderImage(asset) {
+  _renderImage(asset, props) {
     const imageSize = 150;
     const imageStyle = [styles.image, {width: imageSize, height: imageSize}];
-    const location = 'Unknown location';
     return (
-      <TouchableOpacity key={asset}>
+      <TouchableOpacity key={asset} onPress={() => props.returnImage(props, asset)}>
         <View style={styles.row}>
           <Image
             source={asset.node.image}

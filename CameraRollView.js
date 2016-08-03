@@ -40,21 +40,6 @@ var logError = require('logError');
 
 var propTypes = {
   /**
-   * The group where the photos will be fetched from. Possible
-   * values are 'Album', 'All', 'Event', 'Faces', 'Library', 'PhotoStream'
-   * and SavedPhotos.
-   */
-  groupTypes: React.PropTypes.oneOf([
-    'Album',
-    'All',
-    'Event',
-    'Faces',
-    'Library',
-    'PhotoStream',
-    'SavedPhotos',
-  ]),
-
-  /**
    * Number of images that will be fetched in one page.
    */
   batchSize: React.PropTypes.number,
@@ -107,7 +92,6 @@ var CameraRollView = React.createClass({
 
     return {
       assets: ([]: Array<Image>),
-      groupTypes: this.props.groupTypes,
       lastCursor: (null : ?string),
       assetType: this.props.assetType,
       noMore: false,
@@ -129,12 +113,6 @@ var CameraRollView = React.createClass({
 
   componentDidMount: function() {
     this.fetch();
-  },
-
-  componentWillReceiveProps: function(nextProps: {groupTypes?: string}) {
-    if (this.props.groupTypes !== nextProps.groupTypes) {
-      this.fetch(true);
-    }
   },
 
   _fetch: function(clear?: boolean) {
@@ -204,7 +182,7 @@ var CameraRollView = React.createClass({
       if (image === null) {
         return null;
       }
-      return this.props.renderImage(image);
+      return this.props.renderImage(image, this.props);
     });
 
     return (

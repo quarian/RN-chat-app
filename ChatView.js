@@ -69,14 +69,19 @@ class ChatView extends Component {
     return message
   }
 
+  postImage(asset) {
+    this.addRow("IMAGE HERE", false);
+  }
+
   goBack(props) {
     props.navigator.pop();
   }
 
-  selectImage(props) {
+  selectImage(props, context) {
     props.navigator.push({
       name: 'Image Selection',
-      component: ImageSelection
+      component: ImageSelection,
+      passProps: {context: this}
     })
   };
 
@@ -96,7 +101,7 @@ class ChatView extends Component {
         <View style={styles.chatTitleContainer}>
           <Text style={styles.chatBackButton} onPress={() => this.goBack(this.props)}>Back</Text>
           <Text style={styles.chatTitle}>{this.props.title}</Text>
-          <Text style={styles.imageButton} onPress={() => this.selectImage(this.props)}>IMAGES</Text>
+          <Text style={styles.imageButton} onPress={() => this.selectImage(this.props, this)}>IMAGES</Text>
         </View>
         <View style={styles.chatListSeparator}/>
         {loading}
