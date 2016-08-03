@@ -89,10 +89,6 @@ class ChatView extends Component {
     this.setState({chatRows: this.state.chatRows});
   }
 
-  goBack(props) {
-    props.navigator.pop();
-  }
-
   selectImage(props, context) {
     props.navigator.push({
       name: 'Image Selection',
@@ -113,11 +109,11 @@ class ChatView extends Component {
         <Text style={styles.loading}>Loading chat history...</Text>
       </View>;
     var imageButtonPlaceholder = !(Platform.OS === 'android') ? null:
-      <Text style={styles.imageButton} onPress={() => this.selectImage(this.props, this)}>IMAGES</Text>
+      <Text style={styles.imageButton} onPress={() => this.selectImage(this.props, this)}>Images</Text>
     return (
       <View style={styles.chatContainer}>
         <View style={styles.chatTitleContainer}>
-          <Text style={styles.chatBackButton} onPress={() => this.goBack(this.props)}>Back</Text>
+          <Text style={styles.chatBackButton} onPress={() => this.props.navigator.pop()}>Back</Text>
           <Text style={styles.chatTitle}>{this.props.title}</Text>
           {imageButtonPlaceholder}
         </View>

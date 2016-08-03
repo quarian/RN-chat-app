@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 const CameraRollView = require('./CameraRollView');
+const styles = require('./Styles');
 
 const CAMERA_ROLL_VIEW = 'camera_roll_view';
 
@@ -24,15 +25,21 @@ class ImageSelection extends Component {
 
   render() {
     return (
-      <View style={styles.info}>
-        <CameraRollView
-          ref={CAMERA_ROLL_VIEW}
-          batchSize={20}
-          renderImage={this._renderImage}
-          returnImage={this.returnImage}
-          navigator={this.props.navigator}
-          parent={this.props.context}
-        />
+      <View style={styles.chatContainer}>
+        <View style={styles.chatTitleContainer}>
+          <Text style={styles.chatBackButton} onPress={() => this.props.navigator.pop()}>Back</Text>
+          <Text style={styles.chatTitle}>Select Image</Text>
+        </View>
+        <View style={styles.imagesContainer}>
+          <CameraRollView
+            ref={CAMERA_ROLL_VIEW}
+            batchSize={20}
+            renderImage={this._renderImage}
+            returnImage={this.returnImage}
+            navigator={this.props.navigator}
+            parent={this.props.context}
+          />
+        </View>
       </View>
     );
   }
@@ -45,39 +52,20 @@ class ImageSelection extends Component {
 
   _renderImage(asset, props) {
     const imageSize = 150;
-    const imageStyle = [styles.image, {width: imageSize, height: imageSize}];
     return (
       <TouchableOpacity key={asset} onPress={() => props.returnImage(props, asset)}>
-        <View style={styles.row}>
+        <View style={styles.imageColumn}>
           <Image
             source={asset.node.image}
-            style={imageStyle}
+            style={styles.imageStyle}
           />
-          <View style={styles.info}>
-            <Text>{asset.node.group_name}</Text>
-            <Text>{new Date(asset.node.timestamp).toString()}</Text>
+          <View>
+            <Text style={styles.imageInfo}>{asset.node.group_name}</Text>
           </View>
         </View>
       </TouchableOpacity>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  url: {
-    fontSize: 9,
-    marginBottom: 14,
-  },
-  image: {
-    margin: 4,
-  },
-  info: {
-    flex: 1,
-  },
-});
 
 module.exports = ImageSelection;

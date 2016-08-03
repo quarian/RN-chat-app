@@ -20,6 +20,8 @@
  *
  * @providesModule CameraRollView
  * @flow
+ *
+ * MODIFIED HERE TO RUN ON ANDROID - DOES NOT RUN ON iOS with this
  */
 'use strict';
 
@@ -65,6 +67,9 @@ var propTypes = {
 
 };
 
+
+const styles = require('./Styles');
+
 var CameraRollView = React.createClass({
   propTypes: propTypes,
 
@@ -75,12 +80,10 @@ var CameraRollView = React.createClass({
       imagesPerRow: 1,
       assetType: 'Photos',
       renderImage: function(asset) {
-        var imageSize = 150;
-        var imageStyle = [styles.image, {width: imageSize, height: imageSize}];
         return (
           <Image
             source={asset.node.image}
-            style={imageStyle}
+            style={styles.imageStyle}
           />
         );
       },
@@ -149,8 +152,10 @@ var CameraRollView = React.createClass({
         renderRow={this._renderRow}
         renderFooter={this._renderFooterSpinner}
         onEndReached={this._onEndReached}
-        style={styles.container}
+        style={styles.listContainer}
         dataSource={this.state.dataSource}
+        horizontal={true}
+        contentContainerStyle={styles.imagesContentContainer}
       />
     );
   },
@@ -215,26 +220,6 @@ var CameraRollView = React.createClass({
     if (!this.state.noMore) {
       this.fetch();
     }
-  },
-});
-
-var styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  url: {
-    fontSize: 9,
-    marginBottom: 14,
-  },
-  image: {
-    margin: 4,
-  },
-  info: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
   },
 });
 

@@ -25,7 +25,7 @@ module.exports = StyleSheet.create({
       textAlign: 'center',
       textAlignVertical: 'center',
       color:  backgroundColor,
-      padding: 12.5,
+      padding: 10,
       backgroundColor: titleBackgroundColor,
       flex: 1
   },
@@ -34,9 +34,9 @@ module.exports = StyleSheet.create({
       textAlign: 'center',
       textAlignVertical: 'center',
       color:  backgroundColor,
-      padding: 12.5,
+      padding: 10,
       backgroundColor: titleBackgroundColor,
-      flex: 1
+      flex: 2
   },
   chatTitle: {
     fontSize: 20,
@@ -60,6 +60,10 @@ module.exports = StyleSheet.create({
   mainContainer: {
     backgroundColor: backgroundColor,
     flex: 1
+  },
+  listContainer: {
+    backgroundColor: backgroundColor,
+    flex: 1,
   },
   loading: {
     fontSize: 20,
@@ -123,7 +127,23 @@ module.exports = StyleSheet.create({
   },
   imageStyle: {
     width: 200,
-    height: 200
+    height: 200,
+    margin: 4
+  },
+  imageColumn: {
+    flexDirection: 'column',
+    flex: 1,
+  },
+  imagesContainer: {
+    flex: 1,
+    backgroundColor: backgroundColor,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageInfo: {
+    textAlign: 'center',
+    color:  titleBackgroundColor,
+    paddingBottom: 20
   },
   separator: {
     backgroundColor: backgroundColor,
