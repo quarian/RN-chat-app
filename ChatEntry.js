@@ -9,7 +9,7 @@ import {
 var ChatView = require('./ChatView');
 var styles = require('./Styles');
 
-class Thumb extends Component {
+class ChatEntry extends Component {
   _onPressButton(props) {
     props.navigator.push({
       name: 'Chat View',
@@ -32,4 +32,4 @@ class Thumb extends Component {
   };
 }
 
-module.exports = Thumb;
+module.exports = ChatEntry;

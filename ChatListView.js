@@ -8,7 +8,7 @@ import {
   StatusBar
 } from 'react-native';
 
-var Thumb = require('./Thumb');
+var ChatEntry = require('./ChatEntry');
 var styles = require('./Styles');
 var getChats = require('./getChats')
 
@@ -40,7 +40,7 @@ class ChatListView extends Component {
   populateFriends() {
     for (var i = 1; i < this.state.userJson.length; i++) {
       this.state.friends.push(
-        <Thumb name={this.state.userJson[i]} key={this.state.friends.length} navigator={this.props.navigator}/>)
+        <ChatEntry name={this.state.userJson[i]} key={this.state.friends.length} navigator={this.props.navigator}/>)
     }
     this.setState({friends: this.state.friends})
   }
