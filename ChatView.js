@@ -50,29 +50,36 @@ class ChatView extends Component {
   }
 
   addRow(message, me) {
-    if (me) {
-        if (message.indexOf("__IMAGE__") < 0) {
-        this.state.chatRows.push(
-          <View key={this.state.chatRows.length} style={styles.myMessageRow}>
-            <View style={styles.myMessageBox}>
-              <Text style={styles.myMessage}>{message}</Text>
-            </View>
-          </View>
-        );
-      } else if (Platform.OS === 'android'){
-        this.postImage(message.slice(message.indexOf("content")));
-      }
-    } else {
+    if (me)
+      this.addMyMessage(message);
+    else
+      this.addFriendMessage(message);
+    this.setState({chatRows: this.state.chatRows});
+    return message
+  }
+
+  addMyMessage(message) {
+    if (message.indexOf("__IMAGE__") < 0) {
       this.state.chatRows.push(
-        <View key={this.state.chatRows.length} style={styles.friendMessageRow}>
-          <View style={styles.friendMessageBox}>
-            <Text style={styles.friendMessage}>{message}</Text>
+        <View key={this.state.chatRows.length} style={styles.myMessageRow}>
+          <View style={styles.myMessageBox}>
+            <Text style={styles.myMessage}>{message}</Text>
           </View>
         </View>
       );
+    } else if (Platform.OS === 'android'){
+      this.postImage(message.slice(message.indexOf("content")));
     }
-    this.setState({chatRows: this.state.chatRows});
-    return message
+  }
+
+  addFriendMessage(message) {
+    this.state.chatRows.push(
+      <View key={this.state.chatRows.length} style={styles.friendMessageRow}>
+        <View style={styles.friendMessageBox}>
+          <Text style={styles.friendMessage}>{message}</Text>
+        </View>
+      </View>
+    );
   }
 
   postImage(assetUri) {
