@@ -16,7 +16,6 @@ class ChatListView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userJson: [],
       friends: [],
       showLoading: true
     }
@@ -33,14 +32,13 @@ class ChatListView extends Component {
 
   handleChats(json) {
     this.setState({showLoading: false})
-    this.setState({userJson: json})
-    this.populateFriends()
+    this.populateFriends(json)
   }
 
-  populateFriends() {
-    for (var i = 1; i < this.state.userJson.length; i++) {
+  populateFriends(json) {
+    for (var i = 1; i < json.length; i++) {
       this.state.friends.push(
-        <ChatEntry name={this.state.userJson[i]} key={this.state.friends.length} navigator={this.props.navigator}/>)
+        <ChatEntry name={json[i]} key={this.state.friends.length} navigator={this.props.navigator}/>)
     }
     this.setState({friends: this.state.friends})
   }
