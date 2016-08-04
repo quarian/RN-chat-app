@@ -34,7 +34,7 @@ class ImageSelection extends Component {
           <CameraRollView
             ref={CAMERA_ROLL_VIEW}
             batchSize={20}
-            renderImage={this._renderImage}
+            renderImage={this.renderImage}
             returnImage={this.returnImage}
             navigator={this.props.navigator}
             parent={this.props.context}
@@ -50,7 +50,7 @@ class ImageSelection extends Component {
     props.navigator.pop();
   }
 
-  _renderImage(asset, props) {
+  renderImage(asset, props) {
     const imageSize = 150;
     return (
       <TouchableOpacity key={asset} onPress={() => props.returnImage(props, asset)}>

@@ -10,7 +10,7 @@ var ChatView = require('./ChatView');
 var styles = require('./Styles');
 
 class ChatEntry extends Component {
-  _onPressButton(props) {
+  onPressButton(props) {
     props.navigator.push({
       name: 'Chat View',
       component: ChatView,
@@ -21,7 +21,7 @@ class ChatEntry extends Component {
   render() {
     return (
       <View style={styles.chatListElement}>
-        <TouchableHighlight onPress={() => this._onPressButton(this.props)}>
+        <TouchableHighlight onPress={() => this.onPressButton(this.props)}>
           <Text style={styles.friendContainer}>
             {this.props.name}
           </Text>
