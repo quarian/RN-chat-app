@@ -1,4 +1,4 @@
-function doPost(url, body, callback, context) {
+function doPost(url, body) {
   return new Promise((resolve, reject) => {
     resolve(
       fetch(url,
@@ -7,8 +7,6 @@ function doPost(url, body, callback, context) {
                     headers: {},
                     body: body
                   })
-    //.then((response) => response.text())
-    //.then((responseText) => callback(responseText, context))
       .catch((error) => console.warn(error))
     )
   })
