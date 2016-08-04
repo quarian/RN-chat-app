@@ -9,6 +9,6 @@
     "babel-jest": "^14.1.0",
     "jest-cli": "^14.1.0",
     "react": "15.2.1",
-    "react-native": "0.29.0"
+    "react-native": "^0.30.0"
   }
 }
