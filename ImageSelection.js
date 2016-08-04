@@ -7,7 +7,8 @@ import {
   Switch,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  InteractionManager
 } from 'react-native';
 
 const CameraRollView = require('./CameraRollView');
@@ -20,10 +21,29 @@ class ImageSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      animationFinished: false,
     };
   }
 
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({animationFinished: true})
+    });
+  }
+
   render() {
+    var showRoll = !this.state.animationFinished ?
+      <View ref="loading" style={styles.loadingContainer}>
+        <Text style={styles.loading}>Loading photos...</Text>
+      </View> :
+        <CameraRollView
+          ref={CAMERA_ROLL_VIEW}
+          batchSize={20}
+          renderImage={this.renderImage}
+          returnImage={this.returnImage}
+          navigator={this.props.navigator}
+          parent={this.props.context}
+        />;
     return (
       <View style={styles.chatContainer}>
         <View style={styles.chatTitleContainer}>
@@ -31,14 +51,7 @@ class ImageSelection extends Component {
           <Text style={styles.chatTitle}>Select Image</Text>
         </View>
         <View style={styles.imagesContainer}>
-          <CameraRollView
-            ref={CAMERA_ROLL_VIEW}
-            batchSize={20}
-            renderImage={this.renderImage}
-            returnImage={this.returnImage}
-            navigator={this.props.navigator}
-            parent={this.props.context}
-          />
+          {showRoll}
         </View>
       </View>
     );
