@@ -3,12 +3,34 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "jest"
+     "test": "mocha tests/*.spec.js"
   },
   "dependencies": {
-    "babel-jest": "^14.1.0",
-    "jest-cli": "^14.1.0",
-    "react": "15.2.1",
-    "react-native": "^0.30.0"
-  }
+   "react": "~15.2.0",
+   "react-dom": "~15.2.0",
+   "react-native": "^0.29.0"
+ },
+ "devDependencies": {
+   "babel-jest": "^14.1.0",
+   "jest-cli": "^14.1.0",
+   "babel-core": "^6.9.0",
+   "babel-eslint": "^6.0.2",
+   "babel-polyfill": "^6.9.0",
+   "babel-preset-react-native": "^1.7.0",
+   "babel-preset-stage-0": "^6.5.0",
+   "babel-register": "^6.9.0",
+   "chai": "^3.5.0",
+   "chokidar-cli": "^1.2.0",
+   "enzyme": "^2.2.0",
+   "eslint": "^2.8.0",
+   "eslint-plugin-babel": "^3.2.0",
+   "eslint-plugin-react": "^4.3.0",
+   "fetch-mock": "^4.5.4",
+   "istanbul": "1.0.0-alpha.2",
+   "mocha": "^2.4.5",
+   "react-addons-test-utils": "15.0.2",
+   "react-native-mock": "~0.2.4",
+   "rimraf": "^2.5.2",
+   "sinon": "^1.17.4"
+ }
 }
