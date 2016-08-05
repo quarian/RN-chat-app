@@ -46,4 +46,13 @@ describe('<ChatView/>', () => {
     expect(wrapper.state().showLoading).to.equal(false);
     expect(wrapper.state().chatRows).to.have.length(3);
   });
+
+  // Throws around warnings about setState(), but it is to be expected
+  it('tests row addition functions', () => {
+    var chatView = new ChatView();
+    chatView.addRow("Message1", true);
+    chatView.addRow("Message2", false);
+    expect(chatView.state.chatRows).to.have.lengthOf(2);
+  });
+
 });
