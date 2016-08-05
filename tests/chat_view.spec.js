@@ -18,15 +18,35 @@ import {hasStyles} from '../test/assertions';
 // Currently, the react-native-mock library does not mock a function that
 // is used by the CameraRoll (groupByEveryN) - so trying to import and work
 // with that will cause this to explode. Put that to the TODO list
-//import ChatInput from '../ChatView';
+import ChatView from '../ChatView';
+import ChatInput from '../ChatInput'
 
 describe('<ChatView/>', () => {
 
-  it('should render an empty chat view', () => {
+  it('should render an empty chat view with loading message', () => {
     const wrapper = shallow(
-    //  <ChatView />
+      <ChatView title={"Friend"}/>
     );
 
-    //expect(wrapper.find(TextInput)).to.have.lengthOf(1);
+    expect(wrapper.find(ChatInput)).to.have.lengthOf(1);
+    expect(wrapper.find(ScrollView)).to.have.lengthOf(1);
+    expect(wrapper.find(Text)).to.have.lengthOf(3);
+    expect(wrapper.props().title).to.be.defined;
+    expect(wrapper.state().showLoading).to.equal(true);
+    expect(wrapper.state().chatRows).to.be.empty;
+  });
+
+  it('should render a chat view with 3 rows of messages', () => {
+    const wrapper = shallow(
+      <ChatView title={"Friend"}/>
+    );
+    wrapper.setState({showLoading: false});
+    wrapper.setState({chatRows: ["message1", "message2", "message3"]})
+    expect(wrapper.find(ChatInput)).to.have.lengthOf(1);
+    expect(wrapper.find(ScrollView)).to.have.lengthOf(1);
+    expect(wrapper.find(Text)).to.have.lengthOf(2);
+    expect(wrapper.props().title).to.be.defined;
+    expect(wrapper.state().showLoading).to.equal(false);
+    expect(wrapper.state().chatRows).to.have.length(3);
   });
 });

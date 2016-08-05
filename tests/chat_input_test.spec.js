@@ -18,11 +18,12 @@ import ChatInput from '../ChatInput';
 
 describe('<ChatInput/>', () => {
 
-  it('should render the basic chatinput with one input', () => {
+  it('should render the basic chatinput with empty input', () => {
     const wrapper = shallow(
       <ChatInput />
     );
 
     expect(wrapper.find(TextInput)).to.have.lengthOf(1);
+    expect(wrapper.state().text).to.equal('');
   });
 });
