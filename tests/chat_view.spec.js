@@ -15,9 +15,6 @@ import {describe, it} from 'mocha';
 import {expect} from 'chai';
 import {hasStyles} from '../test/assertions';
 
-// Currently, the react-native-mock library does not mock a function that
-// is used by the CameraRoll (groupByEveryN) - so trying to import and work
-// with that will cause this to explode. Put that to the TODO list
 import ChatView from '../ChatView';
 import ChatInput from '../ChatInput'
 
