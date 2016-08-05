@@ -6,6 +6,8 @@ This is a simple chat app, written in React Native for the purpose of learning. 
 The app shows basic scene functionality, networking thorugh http POST, GET and websockets and accessing images on the phone
 (the last feature only implemented for Android).
 
-Currently under constructin is a testing framework - both [Facebook Jest](https://facebook.github.io/jest/) and
-[AirBnB Enzyme](https://github.com/airbnb/enzyme) + [Mocha](https://mochajs.org/) implementations are under testing.
+Run tests with ```npm test```
+
+The testing stack is built on [AirBnB Enzyme](https://github.com/airbnb/enzyme) + [Mocha](https://mochajs.org/) - as cane be found from the [Pepperoni project](https://github.com/futurice/pepperoni-app-kit).
+
 Smoke tests for the web connections can be run with jest.
