@@ -8,6 +8,6 @@ The app shows basic scene functionality, networking thorugh http POST, GET and w
 
 Run tests with ```npm test```
 
-The testing stack is built on [AirBnB Enzyme](https://github.com/airbnb/enzyme) + [Mocha](https://mochajs.org/) - as cane be found from the [Pepperoni project](https://github.com/futurice/pepperoni-app-kit).
+The testing stack is built on [AirBnB Enzyme](https://github.com/airbnb/enzyme) + [Mocha](https://mochajs.org/) - as can be found from the [Pepperoni project](https://github.com/futurice/pepperoni-app-kit).
 
 Smoke tests for the web connections can be run with jest.
