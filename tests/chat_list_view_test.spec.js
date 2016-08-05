@@ -38,4 +38,15 @@ describe('<ChatListView/>', () => {
     expect(wrapper.find(Text)).to.have.lengthOf(1);
     expect(wrapper.find(ChatEntry)).to.have.lengthOf(2);
   });
+
+
+  // This test will note that you are calling setState() from an umnounted
+  // component, we are testing if the setState makes what we want it to do.
+  it('should append friends with its functions', () => {
+    var chatList = new ChatListView();
+    chatList.props = {navigator : null};
+    // populateFriends leaves out the first item on purpose
+    chatList.populateFriends(JSON.parse('["Champ", "Friend1", "Friend2"]'));
+    expect(chatList.state.friends).to.have.lengthOf(2);
+  });
 });
